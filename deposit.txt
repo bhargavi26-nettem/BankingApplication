@@ -1,0 +1,262 @@
+package sara1155;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import javax.swing.border.EmptyBorder;
+
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.awt.event.ActionEvent;
+
+public class Deposit2 extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField t1;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField t5;
+	private JTextField t6;
+	private JTextField t7;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Deposit2 frame = new Deposit2();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Deposit2() {
+	 initComponents();
+		date();
+	}
+	private void date() {
+		// TODO Auto-generated method stub
+	     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+	     LocalDateTime now = LocalDateTime.now();  
+	     String date = dtf.format(now);
+	     textField_4.setText(date);
+	     }
+
+	public void initComponents() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setBounds(100, 100, 450, 300);
+		setSize(960,660);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(240, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(245, 245, 220));
+		panel.setBounds(10, 40, 199, 134);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		t1 = new JTextField();
+		t1.setBounds(10, 45, 179, 20);
+		panel.add(t1);
+		t1.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("Enter the account no");
+		lblNewLabel_1.setBounds(10, 11, 179, 14);
+		panel.add(lblNewLabel_1);
+		
+		
+		JButton btnNewButton = new JButton("FIND");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank","root","mona1155");
+					PreparedStatement ps = con.prepareStatement("select v.customer_ID,v.first_name,v.last_name,v.balance from viewaccount v where v.account_no=?");
+					ps.setString(1,t1.getText());
+					
+					ResultSet rs1= ps.executeQuery();
+					if(rs1.next()==false){
+					          JOptionPane.showMessageDialog(null,"Account_No not found");
+					          textField_1.setText("");
+					                textField_2.setText("");
+					                t5.setText("");
+					               
+					}
+					else{          String id = rs1.getString(1);
+					                String firstname = rs1.getString(2);
+					                String lasttname = rs1.getString(3);
+					                String balance=rs1.getString(4);
+					               
+					                textField_1.setText(id.trim());
+					                textField_2.setText(firstname.trim());
+					                textField_3.setText(lasttname.trim());
+		                            t5.setText(balance.trim());
+		                           
+					               
+					            }
+					
+					}
+					catch(Exception ev) {
+						System.out.println(e);	
+					}
+				
+			}
+		});
+		
+		JButton btnNewButton_1 = new JButton("OK");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				float balance=Float.parseFloat(t5.getText());
+		        float deposit=Float.parseFloat(t6.getText());
+		        t7.setText(String.valueOf(balance+deposit));
+		        try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank","root","mona1155");
+					PreparedStatement ps = con.prepareStatement("update viewaccount v set v.balance=? where v.account_no=? ");
+					
+					ps.setString(1,t7.getText());
+					ps.setString(2,t1.getText());
+				    ps.executeUpdate();
+				    JOptionPane.showMessageDialog(null,"Deposited successfully");
+				    System.exit(0);
+					}
+					catch(Exception ev) {
+						System.out.println(e);	
+						 JOptionPane.showMessageDialog(null,"Deposit unsuccessful");
+					}
+		       
+				
+		  }
+				
+			
+		});
+		
+		
+		btnNewButton.setBounds(100, 90, 89, 23);
+		panel.add(btnNewButton);
+		
+		JLabel lblNewLabel_2 = new JLabel("Customer Id");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_2.setBounds(10, 199, 81, 14);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("First Name");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_3.setBounds(10, 261, 67, 14);
+		contentPane.add(lblNewLabel_3);
+		
+		JLabel lblNewLabel_4 = new JLabel("Last Name");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_4.setBounds(10, 332, 67, 14);
+		contentPane.add(lblNewLabel_4);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(109, 197, 117, 20);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(109, 260, 117, 20);
+		contentPane.add(textField_2);
+		textField_2.setColumns(10);
+		
+		textField_3 = new JTextField();
+		textField_3.setBounds(109, 330, 117, 20);
+		contentPane.add(textField_3);
+		textField_3.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("Date");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_5.setBounds(10, 396, 46, 14);
+		contentPane.add(lblNewLabel_5);
+		
+		textField_4 = new JTextField();
+		textField_4.setBounds(109, 394, 117, 20);
+		contentPane.add(textField_4);
+		textField_4.setColumns(10);
+		
+		JLabel lblNewLabel_6 = new JLabel("Balance");
+		lblNewLabel_6.setBounds(284, 40, 46, 14);
+		contentPane.add(lblNewLabel_6);
+		
+		t5 = new JTextField();
+		t5.setBounds(284, 75, 86, 20);
+		contentPane.add(t5);
+		t5.setColumns(10);
+		
+		JLabel lblNewLabel_7 = new JLabel("Deposit");
+		lblNewLabel_7.setBounds(284, 124, 46, 14);
+		contentPane.add(lblNewLabel_7);
+		
+		t6 = new JTextField();
+		t6.setBounds(284, 154, 86, 20);
+		contentPane.add(t6);
+		t6.setColumns(10);
+		
+		
+		btnNewButton_1.setBounds(263, 214, 67, 23);
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("CANCEL");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnNewButton_2.setBounds(343, 214, 81, 23);
+		btnNewButton_2.setBackground(new Color(255, 245, 238));
+		contentPane.add(btnNewButton_2);
+		JButton btnNewButton_3 = new JButton("BACK");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Check c = new Check();
+				c.setVisible(true);
+			}
+		});
+		btnNewButton_3.setBounds(10, 2, 89, 23);
+		btnNewButton_3.setBackground(Color.LIGHT_GRAY);
+		contentPane.add(btnNewButton_3);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Administrator\\Pictures\\Saved Pictures\\s10.png"));
+		lblNewLabel.setBounds(495, 11, 371, 459);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_8 = new JLabel("");
+		lblNewLabel_8.setBounds(510, 24, 317, 294);
+		contentPane.add(lblNewLabel_8);
+		
+		JLabel lblNewLabel_9 = new JLabel("Balance Amount");
+		lblNewLabel_9.setBounds(284, 263, 97, 14);
+		contentPane.add(lblNewLabel_9);
+		
+		t7 = new JTextField();
+		t7.setBounds(284, 302, 86, 20);
+		contentPane.add(t7);
+		t7.setColumns(10);
+	}
+}
+

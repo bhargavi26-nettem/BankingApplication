@@ -1,0 +1,180 @@
+package sara1155;
+
+import java.sql.*;
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.awt.event.ActionEvent;
+
+public class AccountDetails2 extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AccountDetails2 frame = new AccountDetails2();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public AccountDetails2() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setBounds(100, 100, 450, 300);
+		setSize(960,660);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(240, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("First Name");
+		lblNewLabel.setBounds(395, 52, 106, 14);
+		lblNewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 15));
+		contentPane.add(lblNewLabel);
+		
+		textField = new JTextField();
+		textField.setBounds(584, 51, 133, 20);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("Last Name");
+		lblNewLabel_1.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 15));
+		lblNewLabel_1.setBounds(395, 104, 86, 20);
+		contentPane.add(lblNewLabel_1);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(584, 106, 133, 20);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Street");
+		lblNewLabel_2.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 15));
+		lblNewLabel_2.setBounds(395, 174, 90, 14);
+		contentPane.add(lblNewLabel_2);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(584, 173, 133, 20);
+		contentPane.add(textField_2);
+		textField_2.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("City");
+		lblNewLabel_3.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 15));
+		lblNewLabel_3.setBounds(395, 233, 58, 20);
+		contentPane.add(lblNewLabel_3);
+		
+		textField_3 = new JTextField();
+		textField_3.setBounds(584, 235, 133, 20);
+		contentPane.add(textField_3);
+		textField_3.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("Branch");
+		lblNewLabel_4.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 15));
+		lblNewLabel_4.setBounds(395, 294, 70, 14);
+		contentPane.add(lblNewLabel_4);
+		
+		textField_4 = new JTextField();
+		textField_4.setBounds(584, 293, 133, 20);
+		contentPane.add(textField_4);
+		textField_4.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("Mobile");
+		lblNewLabel_5.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 15));
+		lblNewLabel_5.setBounds(395, 360, 90, 14);
+		contentPane.add(lblNewLabel_5);
+		
+		textField_5 = new JTextField();
+		textField_5.setBounds(584, 359, 133, 20);
+		contentPane.add(textField_5);
+		textField_5.setColumns(10);
+		
+		JButton btnNewButton = new JButton("ADD");
+		btnNewButton.setBackground(new Color(175, 238, 238));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank","root","mona1155");
+					PreparedStatement ps = con.prepareStatement("insert into Adetails values( ?,?,?,?,?,?)");
+					ps.setString(1,textField.getText());
+					ps.setString(2,textField_1.getText());
+					ps.setString(3,textField_2.getText());
+					ps.setString(4,textField_3.getText());
+					ps.setString(5,textField_4.getText());
+					ps.setString(6,textField_5.getText());
+					ps.executeUpdate();
+					JOptionPane.showMessageDialog(null,"Data Inserted Successfully");
+					}
+					catch(Exception ev) {
+						System.out.println(e);	
+					}
+				Check c=new Check();
+				c.setVisible(true);
+			}
+		});
+		btnNewButton.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 15));
+		btnNewButton.setBounds(395, 418, 103, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("CANCEL");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnNewButton_1.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 15));
+		btnNewButton_1.setBackground(new Color(255, 245, 238));
+		btnNewButton_1.setBounds(601, 418, 103, 23);
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("BACK");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Select s=new Select();
+				s.setVisible(true);
+			}
+		});
+		btnNewButton_2.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 15));
+		btnNewButton_2.setBackground(Color.LIGHT_GRAY);
+		btnNewButton_2.setBounds(786, 48, 103, 23);
+		contentPane.add(btnNewButton_2);
+		
+		JLabel lblNewLabel_6 = new JLabel("");
+		lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\Administrator\\Pictures\\Saved Pictures\\s7.png"));
+		lblNewLabel_6.setBounds(30, 11, 321, 451);
+		contentPane.add(lblNewLabel_6);
+	}
+}

@@ -1,0 +1,102 @@
+package sara1155;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.Color;
+
+public class Select extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Select frame = new Select();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Select() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setBounds(100, 100, 450, 300);
+		setSize(860,550);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(240, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton btnNewButton_1 = new JButton("Create a New Account");
+		btnNewButton_1.setBackground(Color.CYAN);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				AccountDetails2 a=new AccountDetails2();
+				a.setVisible(true);
+			}
+		});
+		btnNewButton_1.setBounds(160, 326, 175, 23);
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnNewButton = new JButton("Existing Account");
+		btnNewButton.setBackground(Color.CYAN);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Check c=new Check();
+				c.setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(510, 326, 173, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_2 = new JButton("BACK");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_2.setBackground(Color.LIGHT_GRAY);
+		btnNewButton_2.setBounds(24, 26, 89, 23);
+		contentPane.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("CANCEL");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_3.setBackground(new Color(255, 245, 238));
+		btnNewButton_3.setBounds(670, 402, 89, 23);
+		contentPane.add(btnNewButton_3);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Administrator\\Pictures\\Saved Pictures\\55.png"));
+		lblNewLabel.setBounds(117, 72, 232, 243);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Administrator\\Pictures\\Saved Pictures\\66.png"));
+		lblNewLabel_1.setBounds(467, 72, 242, 243);
+		contentPane.add(lblNewLabel_1);
+	
+	}
+}

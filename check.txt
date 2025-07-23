@@ -1,0 +1,118 @@
+package sara1155;
+
+import java.awt.Color;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+
+public class Check extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Check frame = new Check();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Check() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setBounds(100, 100, 450, 300);
+		setSize(860,550);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(240, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton btnNewButton_2 = new JButton("Withdraw");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Withdraw1 w = new Withdraw1();
+				w.setVisible(true);
+			}
+		});
+		btnNewButton_2.setBounds(301, 399, 181, 23);
+		contentPane.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("View account details");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ViewBalance1 v = new ViewBalance1();
+				v.setVisible(true);
+			}
+		});
+		btnNewButton_3.setBounds(44, 209, 181, 23);
+		contentPane.add(btnNewButton_3);
+		
+		JButton btnNewButton_1 = new JButton("Cancel");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnNewButton_1.setBounds(657, 459, 140, 23);
+		btnNewButton_1.setBackground(new Color(255, 245, 238));
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnNewButton = new JButton("Deposit");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Deposit2 d = new Deposit2();
+				d.setVisible(true);
+			}
+		});
+		btnNewButton.setBounds(585, 209, 158, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_4 = new JButton("BACK");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Select s = new Select();
+				s.setVisible(true);
+			}
+		});
+		btnNewButton_4.setBounds(10, 11, 89, 23);
+		btnNewButton_4.setBackground(Color.LIGHT_GRAY);
+		contentPane.add(btnNewButton_4);
+		
+		JLabel l1 = new JLabel("");
+		l1.setIcon(new ImageIcon("C:\\Users\\Administrator\\Pictures\\Saved Pictures\\s9.png"));
+		l1.setBounds(44, 59, 181, 112);
+		contentPane.add(l1);
+		
+		JLabel l2 = new JLabel("");
+		l2.setIcon(new ImageIcon("C:\\Users\\Administrator\\Pictures\\Saved Pictures\\s1.png"));
+		l2.setBounds(568, 59, 190, 112);
+		contentPane.add(l2);
+		
+		JLabel l3 = new JLabel("");
+		l3.setIcon(new ImageIcon("C:\\Users\\Administrator\\Pictures\\Saved Pictures\\s15.png"));
+		l3.setBounds(289, 257, 198, 112);
+		contentPane.add(l3);
+	}
+
+}

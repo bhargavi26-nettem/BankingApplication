@@ -1,0 +1,116 @@
+package sara1155;
+
+import java.awt.EventQueue;
+
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Label;
+import java.awt.TextField;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.Button;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTabbedPane;
+import java.awt.Color;
+import javax.swing.JCheckBox;
+import javax.swing.JToggleButton;
+
+public class login1 extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					login1 frame = new login1();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public login1() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setBounds(100, 100, 450, 300);
+		setSize(608,430);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(240, 255, 255));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		Label label = new Label("LOGIN FORM");
+		label.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 22));
+		label.setBounds(208, 37, 193, 38);
+		contentPane.add(label);
+		
+		Label label_1 = new Label("username");
+		label_1.setForeground(new Color(0, 0, 0));
+		label_1.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 19));
+		label_1.setBounds(112, 104, 109, 22);
+		contentPane.add(label_1);
+		
+		Label label_2 = new Label("Password");
+		label_2.setFont(new Font("Arial Rounded MT Bold", Font.BOLD, 20));
+		label_2.setBounds(112, 144, 109, 31);
+		contentPane.add(label_2);
+		
+		TextField txtuser = new TextField();
+		txtuser.setBounds(272, 104, 129, 22);
+		contentPane.add(txtuser);
+		
+		TextField txtpwd = new TextField();
+		txtpwd.setBounds(272, 153, 129, 22);
+		contentPane.add(txtpwd);
+		
+		Button button = new Button("Login");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(txtuser.getText().equals("Mona"))
+					if(txtpwd.getText().equals("sara"))
+					{
+						JOptionPane.showMessageDialog(null,"Welcome To Bank");
+						Select s=new Select();
+						s.setVisible(true);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null,"invalid UserName&Password");
+					}
+				     
+			}
+		});
+		button.setBounds(142, 220, 109, 38);
+		button.setBackground(new Color(175, 238, 238));
+		contentPane.add(button);
+		
+		Button button_1 = new Button("Cancel");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		button_1.setBounds(315, 220, 97, 38);
+		button_1.setBackground(new Color(255, 245, 238));
+		contentPane.add(button_1);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(272, 101, 5, 5);
+		contentPane.add(tabbedPane);
+	}
+}

@@ -1,0 +1,235 @@
+package sara1155;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.awt.event.ActionEvent;
+
+public class Withdraw1 extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField t1;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField t5;
+	private JTextField t6;
+	private JTextField t7;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Withdraw1 frame = new Withdraw1();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Withdraw1() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setBounds(100, 100, 450, 300);
+		setSize(960,660);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(240, 255, 240));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(245, 245, 220));
+		panel.setBounds(10, 31, 194, 125);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("Enter the accountno");
+		lblNewLabel_1.setBounds(23, 11, 132, 14);
+		lblNewLabel_1.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 13));
+		panel.add(lblNewLabel_1);
+		
+		t1 = new JTextField();
+		t1.setBounds(23, 51, 132, 20);
+		panel.add(t1);
+		t1.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Find");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank","root","mona1155");
+					PreparedStatement ps = con.prepareStatement("select v.customer_ID,v.first_name,v.last_name,v.balance from viewaccount v where v.account_no=?");
+					ps.setString(1,t1.getText());
+					
+					ResultSet rs1= ps.executeQuery();
+					if(rs1.next()==false){
+					          JOptionPane.showMessageDialog(null,"Account_No not found");
+					          textField_1.setText("");
+					          textField_2.setText("");
+					               
+					}
+					else{          String id = rs1.getString(1);
+					                String firstname = rs1.getString(2);
+					                String lasttname = rs1.getString(3);
+					                String balance=rs1.getString(4);
+					                textField_1.setText(id.trim());
+					                textField_2.setText(firstname.trim());
+					                textField_3.setText(lasttname.trim());
+		                            t5.setText(balance.trim());
+					               
+					            }
+					}
+					catch(Exception ev) {
+						System.out.println(e);	
+					}
+			}
+		});
+		btnNewButton.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 15));
+		btnNewButton.setBounds(95, 91, 89, 23);
+		panel.add(btnNewButton);
+		
+		JLabel lblNewLabel_2 = new JLabel("Customer Id");
+		lblNewLabel_2.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 13));
+		lblNewLabel_2.setBounds(10, 202, 93, 14);
+		contentPane.add(lblNewLabel_2);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(118, 200, 109, 20);
+		contentPane.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("FirstName");
+		lblNewLabel_3.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 13));
+		lblNewLabel_3.setBounds(10, 270, 74, 14);
+		contentPane.add(lblNewLabel_3);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(118, 268, 109, 20);
+		contentPane.add(textField_2);
+		textField_2.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("LastName");
+		lblNewLabel_4.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 13));
+		lblNewLabel_4.setBounds(10, 336, 74, 14);
+		contentPane.add(lblNewLabel_4);
+		
+		textField_3 = new JTextField();
+		textField_3.setBounds(118, 334, 109, 20);
+		contentPane.add(textField_3);
+		textField_3.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("Balance");
+		lblNewLabel_5.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 13));
+		lblNewLabel_5.setBounds(305, 11, 56, 20);
+		contentPane.add(lblNewLabel_5);
+		
+		t5 = new JTextField();
+		t5.setBounds(279, 54, 109, 20);
+		contentPane.add(t5);
+		t5.setColumns(10);
+		
+		JLabel lblNewLabel_6 = new JLabel("withdraw");
+		lblNewLabel_6.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 13));
+		lblNewLabel_6.setBounds(305, 102, 68, 14);
+		contentPane.add(lblNewLabel_6);
+		
+		t6 = new JTextField();
+		t6.setBounds(279, 148, 109, 20);
+		contentPane.add(t6);
+		t6.setColumns(10);
+		
+		JButton btnNewButton_1 = new JButton("OK");
+		btnNewButton_1.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 11));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				float balance=Float.parseFloat(t5.getText());
+		        float deposit=Float.parseFloat(t6.getText());
+		        
+		        t7.setText(String.valueOf(balance-deposit));
+		        try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank","root","mona1155");
+					PreparedStatement ps = con.prepareStatement("update viewaccount v set v.balance=? where v.account_no=? ");
+					
+					ps.setString(1,t7.getText());
+					ps.setString(2,t1.getText());
+				    ps.executeUpdate();
+				    JOptionPane.showMessageDialog(null,"withdraw successfully");
+				    System.exit(0);
+					}
+					catch(Exception ev) {
+						System.out.println(e);	
+						 JOptionPane.showMessageDialog(null,"withdraw unsuccessful");
+					}
+		       
+				
+				
+								
+			}
+		});
+		btnNewButton_1.setBounds(263, 199, 63, 23);
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("CANCEL");
+		btnNewButton_2.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 11));
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_2.setBounds(341, 199, 89, 23);
+		btnNewButton_2.setBackground(new Color(255, 245, 238));
+		contentPane.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("BACK");
+		btnNewButton_3.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 11));
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Check c = new Check();
+				c.setVisible(true);
+			}
+		});
+		btnNewButton_3.setBounds(10, 0, 89, 23);
+		contentPane.add(btnNewButton_3);
+		
+		JLabel lblNewLabel = new JLabel("Balance Amount");
+		lblNewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 11));
+		lblNewLabel.setBounds(289, 271, 109, 14);
+		contentPane.add(lblNewLabel);
+		
+		t7 = new JTextField();
+		t7.setBounds(279, 313, 119, 20);
+		contentPane.add(t7);
+		t7.setColumns(10);
+		
+		JLabel lblNewLabel_7 = new JLabel("");
+		lblNewLabel_7.setIcon(new ImageIcon("C:\\Users\\Administrator\\Pictures\\Saved Pictures\\s3.png"));
+		lblNewLabel_7.setBounds(536, 11, 306, 433);
+		contentPane.add(lblNewLabel_7);
+	}
+}
